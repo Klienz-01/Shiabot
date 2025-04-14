@@ -17,6 +17,7 @@ BOT_NAME = os.getenv("BOT_NAME", "Shia")
 if not all([TOKEN, OPENAI_API_KEY, OWNER_ID]):
     raise EnvironmentError("Missing one or more required environment variables: DISCORD_TOKEN, OPENAI_API_KEY, OWNER_ID")
 
+import openai
 openai.api_key = OPENAI_API_KEY
 
 # Setup intents
@@ -276,7 +277,7 @@ async def on_message(message):
             print(f"📨 From {message.author}: {message.content}")
             print("🧠 Sending to OpenAI...")
 
-            response = client.chat.completions.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=conversation,
                 temperature=0.9
