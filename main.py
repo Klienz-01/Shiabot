@@ -63,7 +63,7 @@ import json
 from discord.ext import commands
 from dotenv import load_dotenv
 
-Load .env file
+# Load .env file
 load_dotenv()
 
 Get secrets
