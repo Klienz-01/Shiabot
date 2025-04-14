@@ -66,7 +66,7 @@ from dotenv import load_dotenv
 # Load .env file
 load_dotenv()
 
-Get secrets
+# Get secrets
 TOKEN = os.getenv("DISCORD_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OWNER_ID = os.getenv("OWNER_ID")
