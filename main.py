@@ -1,3 +1,6 @@
+# 💡 Ping redeploy: Shia wake up
+
+
 import discord
 import openai
 import os
