@@ -99,7 +99,6 @@ async def on_message(message):
 print("🟢 Attempting to start Shia...")
 bot.run(TOKEN)
 
-On Mon, Apr 14, 2025 at 9:01 PM Klienz <sunmankind@gmail.com> wrote:
 import discord
 import os
 import json
