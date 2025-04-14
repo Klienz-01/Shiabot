@@ -1,0 +1,1 @@
+This folder stores per-user memory files.
