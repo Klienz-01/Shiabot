@@ -90,9 +90,10 @@ async def on_message(message):
             save_user_memory(user_id, user_memory)
 
         except Exception as e:
-            print("❌ ERROR while generating reply:")
-            print(e)
-            await message.channel.send("Something broke in my brain... try again soon.")
+            import traceback
+            print ("ERROR while generating reply")
+            traceback.print_exc()
+            await message.channel.send(f"My brain crashed:\n```{e}```")
 
     await bot.process_commands(message)
 
