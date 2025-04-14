@@ -221,7 +221,13 @@ BOT_NAME = os.getenv("BOT_NAME", "Shia")
 if not all([TOKEN, OPENAI_API_KEY, OWNER_ID]):
     raise EnvironmentError("Missing one or more required environment variables: DISCORD_TOKEN, OPENAI_API_KEY, OWNER_ID")
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+import openai
+openai.api_key = OPENAI_API_KEY
+           response = openai.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=conversation,
+                temperature=0.9
+            )
 
 # Setup intents
 intents = discord.Intents.default()
