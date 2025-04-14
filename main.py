@@ -95,3 +95,5 @@ async def on_message(message):
 # Start her
 print("🟢 Attempting to start Shia...")
 bot.run(TOKEN)
+
+# Trigger redeploy attempt
