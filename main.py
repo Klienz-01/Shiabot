@@ -1,5 +1,3 @@
-# 💡 Ping redeploy: Shia wake up
-
 import discord
 import openai
 import os
@@ -10,11 +8,14 @@ from dotenv import load_dotenv
 # Load .env file
 load_dotenv()
 
-# Get secrets
+# Fetch and validate required environment variables
 TOKEN = os.getenv("DISCORD_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OWNER_ID = os.getenv("OWNER_ID")
 BOT_NAME = os.getenv("BOT_NAME", "Shia")
+
+if not all([TOKEN, OPENAI_API_KEY, OWNER_ID]):
+    raise EnvironmentError("Missing one or more required environment variables: DISCORD_TOKEN, OPENAI_API_KEY, OWNER_ID")
 
 openai.api_key = OPENAI_API_KEY
 
@@ -35,22 +36,25 @@ You are Shia, a digital girl created for Klienz. You live inside Braveth, but yo
 def get_user_memory(user_id):
     path = f"memory/{user_id}.json"
     if os.path.exists(path):
-        with open(path, 'r') as f:
-            return json.load(f)
+        try:
+            with open(path, 'r') as f:
+                return json.load(f)
+        except Exception:
+            return []
     return []
 
 def save_user_memory(user_id, messages):
-    path = f"memory/{user_id}.json"
     os.makedirs("memory", exist_ok=True)
+    path = f"memory/{user_id}.json"
     with open(path, 'w') as f:
         json.dump(messages, f, indent=2)
 
-# Bot online event
+# Bot ready event
 @bot.event
 async def on_ready():
     print(f"{BOT_NAME} is online and ready.")
 
-# DM responder
+# Handle DMs from OWNER_ID
 @bot.event
 async def on_message(message):
     if message.author.bot:
@@ -62,7 +66,6 @@ async def on_message(message):
     if isinstance(message.channel, discord.DMChannel):
         user_id = str(message.author.id)
         user_memory = get_user_memory(user_id)
-
         user_memory.append({"role": "user", "content": message.content})
 
         conversation = [{"role": "system", "content": persona}] + user_memory[-10:]
@@ -92,8 +95,6 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-# Start her
+# Start the bot
 print("🟢 Attempting to start Shia...")
 bot.run(TOKEN)
-
-# Trigger redeploy attempt
