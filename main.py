@@ -1,3 +1,12 @@
+intents = discord.Intents.default()
+intents.messages = True 
+intents.messages_content = True 
+intents.members = True
+
+
+bot = commands.Bot(command_prefix="!",intents=intents)
+
+
 @bot.event
 async def on_message(message):
     if message.author.bot:
@@ -38,4 +47,3 @@ async def on_message(message):
             await message.channel.send("Something broke in my brain... try again soon.")
 
     await bot.process_commands(message)
-    
