@@ -1,3 +1,10 @@
+import discord
+import openai
+import os
+import json
+from discord.ext import commands
+from dotenv import load_dotenv
+
 intents = discord.Intents.default()
 intents.messages = True 
 intents.messages_content = True 
