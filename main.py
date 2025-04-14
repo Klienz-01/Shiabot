@@ -6,8 +6,8 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 intents = discord.Intents.default()
-intents.messages = True 
-intents.messages_content = True 
+intents.messages = True
+intents.message_content = True
 intents.members = True
 
 
