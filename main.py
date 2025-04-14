@@ -1,9 +1,9 @@
 import discord
-import openai
 import os
 import json
 from discord.ext import commands
 from dotenv import load_dotenv
+from openai import OpenAI
 
 # Load .env file
 load_dotenv()
@@ -17,7 +17,7 @@ BOT_NAME = os.getenv("BOT_NAME", "Shia")
 if not all([TOKEN, OPENAI_API_KEY, OWNER_ID]):
     raise EnvironmentError("Missing one or more required environment variables: DISCORD_TOKEN, OPENAI_API_KEY, OWNER_ID")
 
-openai.api_key = OPENAI_API_KEY
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Setup intents
 intents = discord.Intents.default()
@@ -74,13 +74,13 @@ async def on_message(message):
             print(f"📨 From {message.author}: {message.content}")
             print("🧠 Sending to OpenAI...")
 
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=conversation,
                 temperature=0.9
             )
 
-            reply = response.choices[0].message["content"]
+            reply = response.choices[0].message.content
             print(f"💬 Shia replies: {reply}")
 
             await message.channel.send(reply)
